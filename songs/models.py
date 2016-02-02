@@ -43,7 +43,7 @@ class Artistterm(models.Model):
     term_id = models.AutoField(primary_key=True)
     artist = models.ForeignKey('Artist')
     term = models.CharField(max_length=40)
-    terms_freq = models.DecimalField(max_digits=16, decimal_places=15)
+    terms_freq = models.FloatField()
     terms_weight = models.FloatField()
     
     def __unicode__ (self):
@@ -128,23 +128,23 @@ class Listener(models.Model):
     class Meta:
         db_table = 'Listener'
         
-class Word(models.Model):
-    track_id = models.ForeignKey('Song')
-    mxm_tid = models.IntegerField()
-    word = models.CharField(max_length=40)
-    count = models.IntegerField()
+class Tag(models.Model):
+    tag_id = models.AutoField(primary_key=True)
+    tag = models.CharField(max_length=40)
+    tag_count = models.IntegerField()
+    songs = models.ManyToManyField('Song')
     
     
     def __unicode__ (self):
-        return self.word
+        return self.tag
 
     class Meta:
-        db_table = 'Word'    
+        db_table = 'Tag'    
         
 class Similarity(models.Model):
     song1 = ForeignKey('Song', related_name='%(class)s_similarity_song1')
     song2 = ForeignKey('Song', related_name='%(class)s_similarity_song2')
-    similarity = models.DecimalField(max_digits=19, decimal_places=18)
+    similarity = models.FloatField()
     
     class Meta:
         db_table = 'Similarity'
