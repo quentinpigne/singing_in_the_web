@@ -1,0 +1,74 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400);
+@import url(http://fonts.googleapis.com/css?family=Bitter:400);
+
+html, body {
+    height: 100%;
+    background:center no-repeat fixed url('../img/background.jpg');
+    background-size: cover;
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+}
+
+@media (min-width:768px) {
+    h1 {
+        font-size: 68px;
+    }
+}
+
+a {
+    color: #000;
+}
+
+a:hover {
+    color: #000;
+}
+
+.icon-bar {
+    background-color: #fff;
+}
+
+.navbar-trans {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-width: 0;
+}
+
+.navbar-trans .navbar-brand, .navbar-trans >.container-fluid .navbar-brand {
+    padding: 14px;
+}
+
+.navbar-trans li>a:focus,.navbar-trans li.active {
+    background-color: #fff;
+}
+
+.navbar-trans li>a:hover {
+    background-color: #fff;
+}
+
+.navbar-trans a {
+    color: #000;
+    letter-spacing: 1px;
+}
+
+.navbar-trans {
+    border-color: #eee;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(100,100,100,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(100,100,100,0.6);
+}
+
+section {
+    min-height: 100%;
+}
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+  
+#main-section {
+    background-color: rgba(0, 0, 0, 0.7);
+    font-family: 'Bitter', serif;
+    height: 14rem;
+}
