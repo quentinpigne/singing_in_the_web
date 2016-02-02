@@ -34,3 +34,15 @@ def search(request):
         j['nodes'].append({'name': s.title, 'type': 2})
 
     return JsonResponse(j)
+
+def artist_details(request):
+    art = Artist.objects.get(artist_name=request.GET['name'])
+
+    j = {}
+    j['artist_familiarity'] = art.artist_familiarity
+    j['artist_hotness'] = art.artist_hotness
+    j['artist_latitude'] = art.artist_latitude
+    j['artist_longitude'] = art.artist_longitude
+    j['artist_location'] = art.artist_location
+
+    return JsonResponse(j)
