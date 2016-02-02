@@ -15,6 +15,7 @@ class AlbumAdmin(admin.ModelAdmin):
                  
                  )
                 )
+    search_fields = ('album_name', )
 
 class ArtistAdmin(admin.ModelAdmin):
     fieldsets = (
@@ -33,6 +34,7 @@ class ArtistAdmin(admin.ModelAdmin):
                   
                   )
                  )
+    search_fields = ('artist_name', )
     
 class SimilarityInline(admin.TabularInline):
     model = Similarity
@@ -51,6 +53,7 @@ class SongAdmin(admin.ModelAdmin):
                                           })
                  )
     inlines = (SimilarityInline, )
+    search_fields = ('title', )
 
 # Register your models here.
 admin.site.register(Album, AlbumAdmin)

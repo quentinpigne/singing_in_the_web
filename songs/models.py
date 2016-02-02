@@ -152,4 +152,5 @@ class Similarity(models.Model):
     
     class Meta:
         db_table = 'Similarity'
-        verbose_name = 'Chansons Similaire'
+        verbose_name = 'Chanson similaire'
+        verbose_name_plural = 'Chansons similaires'
