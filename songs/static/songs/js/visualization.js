@@ -13,6 +13,9 @@ var root, nodes, links;
 // Root node dimensions
 var rw, rh;
 
+// Max name size
+var mns = 50;
+
 function initGraph() {
 	// Set svg dimensions
 	w = $("#graph").width();
@@ -60,7 +63,40 @@ function tick() {
     
 	title.attr("x", function(d) { return d.x; })
 		.attr("y", function(d) { return d.y; });
+	node.each(collide(0.5));
 }
+
+// Gestion des collisions
+
+var padding = 1;
+
+function collide(alpha) {
+	var quadtree = d3.geom.quadtree(nodes);
+	return function(d) {
+		quadtree.visit(function(quad, x1, y1, x2, y2) {
+			var rb = Math.min(d.name.length*8, mns*4) + padding;
+			var nx1 = d.x - rb;
+			var nx2 = d.x + rb;
+			var ny1 = d.y - rb;
+			var ny2 = d.y + rb;
+			if (quad.point && (quad.point !== d)) {
+				var x = d.x - quad.point.x;
+				var y = d.y - quad.point.y;
+				l = Math.sqrt(x * x + y * y);
+				if (l < rb) {
+					l = (l - rb) / l * alpha;
+					d.x -= x *= l;
+					d.y -= y *= l;
+					quad.point.x += x;
+					quad.point.y += y;
+				}
+			}
+			return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+		});
+	};
+}
+
+// Fin de gestion des collisions
 
 function updateNodes() {
 	svg.selectAll(".link").remove();
@@ -78,13 +114,19 @@ function updateNodes() {
 		.attr("class", "title")
 		.attr("text-anchor","middle")
 		.attr("dy",".4em")
-		.text(function(d) { return d.name; });
+		.text(function(d) { 
+			if (d.name.length <= mns) {
+				return d.name; 
+			} else {
+				return d.name.substring(0, mns) + '...';
+			}
+		});
 	
 	var node = svg.selectAll(".node")
 		.data(nodes)
 		.enter().append("ellipse")
 		.attr("class", "node")
-		.attr("rx", function(d) { return d.name.length * 4; })
+		.attr("rx", function(d) { return Math.min(d.name.length * 4, mns*4); })
 		.attr("ry", 30)
 		.style("fill", function(d) { return color(d.type); })
 		.call(force.drag);
@@ -106,11 +148,11 @@ function addNode(node) {
 }
 
 function searchNodes() {
-	clearNodes();
 	var query = $("#search-input").val();
 	d3.json("songs/search/?query=" + encodeURI(query))
 		.header("Content-Type", "application/x-www-form-urlencoded")
 		.get(function(error, data) {
+			clearNodes();
 			$.each(data.nodes, function (index, node) {
 				addNode(node);
 			});
