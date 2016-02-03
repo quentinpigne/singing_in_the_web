@@ -28,17 +28,17 @@ def search(request):
     j = {}
     j['nodes'] = []
     for a in art:
-        j['nodes'].append({'name': a.artist_name, 'type': 0})
+        j['nodes'].append({'id': a.artist_id, 'name': a.artist_name, 'type': 0})
     for a in alb:
-        j['nodes'].append({'name': a.album_name, 'type': 1})
+        j['nodes'].append({'id': a.album_id, 'name': a.album_name, 'type': 1})
     for s in songs:
-        j['nodes'].append({'name': s.title, 'type': 2})
+        j['nodes'].append({'id': s.song_id, 'name': s.title, 'type': 2})
 
     return JsonResponse(j)
 
 def artist_details(request):
     try:
-        art = Artist.objects.get(artist_name=request.GET['artist_name'])
+        art = Artist.objects.get(artist_id=request.GET['artist_id'])
     except ObjectDoesNotExist:
         return JsonResponse({'error': 'L\'artiste n\'existe pas'})
 
@@ -53,7 +53,7 @@ def artist_details(request):
 
 def song_details(request):
     try: 
-        song = Song.objects.get(title=request.GET['title'])
+        song = Song.objects.get(song_id=request.GET['song_id'])
     except ObjectDoesNotExist:
         return JsonResponse({'error': 'La chanson n\'existe pas'})
     
@@ -82,11 +82,98 @@ def song_details(request):
 
 def album_details(request):
     try: 
-        alb = Album.objects.get(album_name=request.GET['album_name'])
+        alb = Album.objects.get(album_id=request.GET['album_id'])
     except ObjectDoesNotExist:
         return JsonResponse({'error': 'L\'album n\'existe pas'})
     
     j = {}
     j['album_year'] = alb.album_year
     
+    return JsonResponse(j)
+
+def artist_relatives(request):
+    try: 
+        art = Artist.objects.get(artist_id=request.GET['artist_id'])
+    except ObjectDoesNotExist:
+        return JsonResponse({'error': 'L\'artiste n\'existe pas'})
+    
+    all_sim_art = art.similar_artists.all()
+    all_songs = art.songs.all()
+    
+    sim_art = []
+    songs = []
+
+    i = 0
+    while len(sim_art) + len(songs) < 8 and i < 8:
+        if i < len(all_sim_art):
+            sim_art.append(all_sim_art[i])
+        if i < len(all_songs) and len(sim_art) + len(songs) < 8:
+            songs.append(all_songs[i])
+        i = i+1
+    
+    j = {}
+    j['nodes'] = []
+    for a in sim_art:
+        j['nodes'].append({'name': a.artist_name, 'type': 0})
+    for s in songs:
+        j['nodes'].append({'name': s.title, 'type': 2})
+         
+    return JsonResponse(j)
+
+def song_relatives(request):
+    try: 
+        song = Song.objects.get(song_id=request.GET['song_id'])
+    except ObjectDoesNotExist:
+        return JsonResponse({'error': 'La chanson n\'existe pas'})
+    
+    all_sim_songs = song.similar_songs.all()
+    all_art = song.artist_set.all()
+    all_alb = song.album_set.all()
+    
+    sim_songs = []
+    art = []
+    alb = []
+
+    i = 0
+    while len(art) + len(alb) + len(sim_songs) < 9 and i < 9:
+        if i < len(all_art):
+            art.append(all_art[i])
+        if i < len(all_alb) and len(art) + len(alb) + len(sim_songs) < 9:
+            alb.append(all_alb[i])
+        if i < len(all_sim_songs) and len(art) + len(alb) + len(sim_songs) < 9:
+            sim_songs.append(all_sim_songs[i])
+        i = i+1
+    
+    j = {}
+    j['nodes'] = []
+    for a in art:
+        j['nodes'].append({'name': a.artist_name, 'type': 0})
+    for a in alb:
+        j['nodes'].append({'name': a.album_name, 'type': 1})
+    for s in sim_songs:
+        j['nodes'].append({'name': s.title, 'type': 2})
+
+    return JsonResponse(j)
+
+def album_relatives(request):
+    try: 
+        alb = Album.objects.get(album_id=request.GET['album_id'])
+    except ObjectDoesNotExist:
+        return JsonResponse({'error': 'L\'album n\'existe pas'})
+    
+    all_songs = alb.songs.all()
+    
+    songs = []
+
+    i = 0
+    while len(songs) < 8 and i < 8:
+        if i < len(all_songs) and len(songs) < 8:
+            songs.append(all_songs[i])
+        i = i+1
+    
+    j = {}
+    j['nodes'] = []
+    for s in songs:
+        j['nodes'].append({'name': s.title, 'type': 2})
+         
     return JsonResponse(j)
