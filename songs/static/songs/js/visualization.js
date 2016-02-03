@@ -106,11 +106,11 @@ function addNode(node) {
 }
 
 function searchNodes() {
-	clearNodes();
 	var query = $("#search-input").val();
 	d3.json("songs/search/?query=" + encodeURI(query))
 		.header("Content-Type", "application/x-www-form-urlencoded")
 		.get(function(error, data) {
+			clearNodes();
 			$.each(data.nodes, function (index, node) {
 				addNode(node);
 			});
