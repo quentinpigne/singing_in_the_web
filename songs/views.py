@@ -117,9 +117,9 @@ def artist_relatives(request):
     j = {}
     j['nodes'] = []
     for a in sim_art:
-        j['nodes'].append({'name': a.artist_name, 'type': 0})
+        j['nodes'].append({'id': a.artist_id, 'name': a.artist_name, 'type': 0})
     for s in songs:
-        j['nodes'].append({'name': s.title, 'type': 2})
+        j['nodes'].append({'id': s.song_id, 'name': s.title, 'type': 2})
          
     return JsonResponse(j)
 
@@ -150,11 +150,11 @@ def song_relatives(request):
     j = {}
     j['nodes'] = []
     for a in art:
-        j['nodes'].append({'name': a.artist_name, 'type': 0})
+        j['nodes'].append({'id': a.artist_id, 'name': a.artist_name, 'type': 0})
     for a in alb:
-        j['nodes'].append({'name': a.album_name, 'type': 1})
+        j['nodes'].append({'id': a.album_id, 'name': a.album_name, 'type': 1})
     for s in sim_songs:
-        j['nodes'].append({'name': s.title, 'type': 2})
+        j['nodes'].append({'id': s.song_id, 'name': s.title, 'type': 2})
 
     return JsonResponse(j)
 
@@ -177,6 +177,6 @@ def album_relatives(request):
     j = {}
     j['nodes'] = []
     for s in songs:
-        j['nodes'].append({'name': s.title, 'type': 2})
+        j['nodes'].append({'id': s.song_id, 'name': s.title, 'type': 2})
          
     return JsonResponse(j)

@@ -10,11 +10,32 @@ var force;
 // Graph nodes and links
 var root, nodes, links;
 
-// Root node dimensions
-var rw, rh;
+// Prototype to calculate text width
+String.prototype.width = function(font) {
+	var f = font || '14px Lato', o = $('<div>' + this + '</div>').css({
+		'position' : 'absolute',
+		'float' : 'left',
+		'white-space' : 'nowrap',
+		'visibility' : 'hidden',
+		'font' : f
+	}).appendTo($('body')), w = o.width();
+
+	o.remove();
+
+	return w;
+}
 
 // Max name size
 var mns = 50;
+
+// Prototype to truncate text
+String.prototype.trunc = function() {
+	if (this.length <= mns) {
+		return this;
+	} else {
+		return this.substring(0, mns) + '...';
+	}
+}
 
 function initGraph() {
 	// Set svg dimensions
@@ -23,15 +44,13 @@ function initGraph() {
 	
 	// Append the svg
 	svg = d3.select("#graph").append("svg")
-	    .attr("width", w)
-	    .attr("height", h);
-
-	// Set central node dimensions
-	rw = w/3;
-	rh = 30;
+		.attr("width", w)
+		.attr("height", h)
+		.attr("viewBox", "0 0 " + w + " " + h)
+		.attr("preserveAspectRatio", "xMidYMid meet");
 	
 	// Initial nodes and links
-	root = {index:0, x:w/2, y:h/2, fixed:true, name:'', type:9};
+	root = {index:0, x:w/2, y:h/2, fixed:true, name:'', type:0};
 	nodes = [root];
 	links = [];
 	
@@ -99,14 +118,10 @@ function collide(alpha) {
 // Fin de gestion des collisions
 
 function updateNodes() {
-	svg.selectAll(".link").remove();
 	svg.selectAll(".node").remove();
 	svg.selectAll(".title").remove();
 	
-	// Customize links and nodes
-	var link = svg.selectAll(".link")
-		.data(links)
-		.enter().append("line");
+	// Customize nodes
 	var title = svg.selectAll(".title")
 		.data(nodes)
 		.enter()
@@ -115,28 +130,134 @@ function updateNodes() {
 		.attr("text-anchor","middle")
 		.attr("dy",".4em")
 		.text(function(d) { 
-			if (d.name.length <= mns) {
-				return d.name; 
-			} else {
-				return d.name.substring(0, mns) + '...';
-			}
+			return d.name.trunc();
 		});
 	
 	var node = svg.selectAll(".node")
 		.data(nodes)
 		.enter().append("ellipse")
 		.attr("class", "node")
-		.attr("rx", function(d) { return Math.min(d.name.length * 4, mns*4); })
+		.attr("rx", function(d) {
+				var textWidth = d.name.trunc().width();
+				return textWidth != 0 ? textWidth / 2 + 10 : 0;
+			})
 		.attr("ry", 30)
 		.style("fill", function(d) { return color(d.type); })
 		.call(force.drag);
 	
+	// Add listener to nodes
+	svg.selectAll(".node").on("click", function(d) {
+		if (d3.event.defaultPrevented) return; // ignore drag
+		detailNode(d);
+	});
+
 	startGraph();
 }
 
+function showLinks() {
+	svg.selectAll(".link").remove();
+	var link = svg.selectAll(".line")
+		.data(nodes)
+		.enter()
+		.append("line")
+		.attr("class", "link");
+}
+
+function detailNode(d) {
+	// Hide search bar
+	$("#search-bar").hide();
+
+	// Clear the links and nodes
+	clearNodes();
+
+	// Node d becomes root
+	root.id = d.id;
+	root.type = d.type;
+	root.name = d.name;
+
+	// Search for node details and relatives
+	var detailsRequest = "songs/",
+		relativesRequest = "songs/";
+
+	switch(d.type) {
+		case 0:
+			// Artist node
+			detailsRequest += "artist_details/?artist_id=" + root.id;
+			relativesRequest += "artist_relatives/?artist_id=" + root.id;
+			break;
+		case 1:
+			// Album node
+			detailsRequest += "album_details/?album_id=" + root.id;
+			relativesRequest += "album_relatives/?album_id=" + root.id;
+			break;
+		case 2:
+			// Song node
+			detailsRequest += "song_details/?song_id=" + root.id;
+			relativesRequest += "song_relatives/?song_id=" + root.id;
+			break;
+	}
+
+	// Details request
+	d3.json(detailsRequest)
+		.header("Content-Type", "application/x-www-form-urlencoded")
+		.get(function(error, data) {
+			// Add the details to the root node
+			switch(root.type) {
+				case 0:
+					// Artist node
+					root.artist_familiarity = data.artist_familiarity;
+					root.artist_hotness = data.artist_hotness;
+					root.artist_latitude = data.artist_latitude;
+					root.artist_longitude = data.artist_longitude;
+					root.artist_location = data.artist_location;
+					break;
+				case 1:
+					// Album node
+					root.album_year = data.album_year;
+					break;
+				case 2:
+					// Song node
+					root.song_hotness = data.song_hotness;
+					root.analysis_sample_rate = data.analysis_sample_rate;
+					root.audio_md5 = data.audio_md5;
+					root.danceability = data.danceability;
+					root.duration = data.duration;
+					root.end_of_fade_in = data.end_of_fade_in;
+					root.energy = data.energy;
+					root.key_item = data.key_item;
+					root.key_confidence = data.key_confidence;
+					root.loudness = data.loudness;
+					root.mode = data.mode;
+					root.mode_confidence = data.mode_confidence;
+					root.start_of_fade_out = data.start_of_fade_out;
+					root.tempo = data.tempo;
+					root.time_signature = data.time_signature;
+					root.time_signature_confidence = data.time_signature_confidence;
+					break;
+			}
+		});
+
+	// Relatives request
+	d3.json(relativesRequest)
+		.header("Content-Type", "application/x-www-form-urlencoded")
+		.get(function(error, data) {
+			// Add all relatives nodes
+			$.each(data.nodes, function (index, node) {
+				addNode(node);
+			});
+			// Show the links in the graph
+			showLinks();
+			// Update the graph
+			updateNodes();
+		});
+
+	// Develop root node details
+	// TODO ...
+}
+
 function clearNodes() {
-	nodes.splice(1, nodes.length - 1);
 	links.splice(0, links.length);
+	nodes.splice(1, nodes.length - 1);
 }
 
 function addNode(node) {
@@ -147,6 +268,7 @@ function addNode(node) {
 	links.push(link);
 }
 
+// Search
 function searchNodes() {
 	var query = $("#search-input").val();
 	d3.json("songs/search/?query=" + encodeURI(query))
@@ -160,18 +282,17 @@ function searchNodes() {
 	});
 }
 
+$("#search-input").keyup(searchNodes);
+
+// Responsive
 function resize() {
-	var width = $("#graph").width();
-	var height = $("#graph").height();
-	svg.attr("width", width).attr("height", height);
-	force.size([force.size()[0]+(width-w),force.size()[1]+(height-h)]).resume();
-    w = width;
-	h = height;
+	w = $("#graph").width();
+	h = $("#graph").height();
+	svg.attr("width", w).attr("height", h);
+	force.size([w, h]).resume();
 }
 
 d3.select(window).on("resize", resize);
-
-$("#search-input").keyup(searchNodes);
 
 // Init graph
 initGraph();
