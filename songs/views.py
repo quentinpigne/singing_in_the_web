@@ -7,6 +7,9 @@ def index(request):
     return render(request, 'songs/index.html')
 
 def search(request):
+    if request.GET['query'] == "":
+        return JsonResponse({'nodes': []})
+
     all_art = Artist.objects.filter(artist_name__icontains=request.GET['query'])
     all_alb = Album.objects.filter(album_name__icontains=request.GET['query'])
     all_songs = Song.objects.filter(title__icontains=request.GET['query'])
