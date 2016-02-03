@@ -1,6 +1,7 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from django.http.response import JsonResponse
-from songs.models import Artist, Album, Song
+from songs.models import Artist, Album, Song, Songstatistic
 
 def index(request):
     return render(request, 'songs/index.html')
@@ -36,7 +37,10 @@ def search(request):
     return JsonResponse(j)
 
 def artist_details(request):
-    art = Artist.objects.get(artist_name=request.GET['name'])
+    try:
+        art = Artist.objects.get(artist_name=request.GET['artist_name'])
+    except ObjectDoesNotExist:
+        return JsonResponse({'error': 'L\'artiste n\'existe pas'})
 
     j = {}
     j['artist_familiarity'] = art.artist_familiarity
@@ -45,4 +49,44 @@ def artist_details(request):
     j['artist_longitude'] = art.artist_longitude
     j['artist_location'] = art.artist_location
 
+    return JsonResponse(j)
+
+def song_details(request):
+    try: 
+        song = Song.objects.get(title=request.GET['title'])
+    except ObjectDoesNotExist:
+        return JsonResponse({'error': 'La chanson n\'existe pas'})
+    
+    j = {}
+    j['song_hotness'] = song.song_hotness
+    
+    stats = Songstatistic.objects.get(song=song)
+    
+    j['analysis_sample_rate'] = stats.analysis_sample_rate
+    j['audio_md5'] = stats.audio_md5
+    j['danceability'] = stats.danceability
+    j['duration'] = stats.duration
+    j['end_of_fade_in'] = stats.end_of_fade_in
+    j['energy'] = stats.energy
+    j['key_item'] = stats.key_item
+    j['key_confidence'] = stats.key_confidence
+    j['loudness'] = stats.loudness
+    j['mode'] = stats.mode
+    j['mode_confidence'] = stats.mode_confidence
+    j['start_of_fade_out'] = stats.start_of_fade_out
+    j['tempo'] = stats.tempo
+    j['time_signature'] = stats.time_signature
+    j['time_signature_confidence'] = stats.time_signature_confidence
+    
+    return JsonResponse(j)
+
+def album_details(request):
+    try: 
+        alb = Album.objects.get(album_name=request.GET['album_name'])
+    except ObjectDoesNotExist:
+        return JsonResponse({'error': 'L\'album n\'existe pas'})
+    
+    j = {}
+    j['album_year'] = alb.album_year
+    
     return JsonResponse(j)

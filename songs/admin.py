@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 from django.contrib import admin
-from songs.models import Album, Artist, Similarity, Song, Songstatistic
+from songs.models import Album, Artist, Similarity, Song
 
 class AlbumAdmin(admin.ModelAdmin):
     exclude = ('album_id', )
