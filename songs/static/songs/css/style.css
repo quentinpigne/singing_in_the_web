@@ -3,7 +3,7 @@
 
 html, body {
     height: 100%;
-    background:center no-repeat fixed url('../img/background.jpg');
+    background: center no-repeat fixed url('../img/background.jpg');
     background-size: cover;
     color: #fff;
     font-family: 'Lato', sans-serif;
@@ -24,11 +24,11 @@ a:hover {
 }
 
 .icon-bar {
-    background-color: #fff;
+    background-color: #000;
 }
 
 .navbar-trans {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.6);
     border-width: 0;
 }
 
@@ -60,15 +60,62 @@ section {
     min-height: 100%;
 }
 
-.center {
+#graph {
+    background-color: rgba(0, 0, 0, 0.7);
+    height: 14rem;
+}
+
+#search-bar {
     position: absolute;
+    font-family: 'Bitter', serif;
     top: 50%;
     left: 50%;
+    width: 100%;
     transform: translate(-50%, -50%);
 }
-  
-#main-section {
-    background-color: rgba(0, 0, 0, 0.7);
-    font-family: 'Bitter', serif;
-    height: 14rem;
+
+#search-input {
+    background-color: transparent;
+    outline: none;
+    color: #fff;
+    font-size: larger;
+    border-top: none;
+    border-right: none;
+    border-bottom: 2px solid #fff;
+    border-left: none;
+    text-align: center;
+}
+
+#search-input:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#search-input::-webkit-input-placeholder {
+    color: #fff;
+    font-style: italic;
+}
+
+#search-input::-moz-placeholder {
+    color: #fff;
+    font-style: italic;
+} /* firefox 19+ */
+
+#search-input:-ms-input-placeholder {
+    color: #fff;
+    font-style: italic;
+} /* ie */
+
+.node {
+    stroke-width: 0;
+    fill-opacity: 0.6;
+}
+
+.link {
+    stroke: #fff;
+    stroke-width: 1px;
+}
+
+.title {
+    fill: #fff;
 }
