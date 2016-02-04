@@ -8,6 +8,7 @@ from django.db.models.fields.related import ForeignKey
 class Album(models.Model):
     album_id = models.AutoField(primary_key=True)
     album_name = models.CharField(max_length=1024, verbose_name='Titre')
+    album_cover = models.CharField(max_length=1024, verbose_name='URL de la jaquette')
     album_year = models.IntegerField(blank=True, null=True, verbose_name='Année de sortie')
     album_7digitalid = models.IntegerField(blank=True, null=True, verbose_name='Identifiant 7digital')
     songs = models.ManyToManyField('Song', verbose_name='Chansons')
@@ -25,6 +26,7 @@ class Artist(models.Model):
     artist_mbid = models.CharField(max_length=40, blank=True, null=True, verbose_name='Identifiant Musicbrainz')
     artist_playmeid = models.IntegerField(blank=True, null=True, verbose_name='Identifiant Playme')
     artist_name = models.CharField(max_length=1024, verbose_name='Nom')
+    artist_thumbnail = models.CharField(max_length=1024, verbose_name='URL de la photo')
     artist_familiarity = models.FloatField(blank=True, null=True, verbose_name='Popularité')
     artist_hotness = models.FloatField(blank=True, null=True, verbose_name='Hotness')
     artist_latitude = models.FloatField(blank=True, null=True, verbose_name='Latitude')

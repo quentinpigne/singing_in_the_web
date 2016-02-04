@@ -6,7 +6,7 @@ class AlbumAdmin(admin.ModelAdmin):
     exclude = ('album_id', )
     fieldsets = (
                 (None, {
-                        'fields': ('album_name', 'songs')
+                        'fields': ('album_name', 'album_cover', 'songs')
                         }
                  ),
                 ('Autres propriétés', {
@@ -20,7 +20,7 @@ class AlbumAdmin(admin.ModelAdmin):
 class ArtistAdmin(admin.ModelAdmin):
     fieldsets = (
                  (None, {
-                         'fields': ('artist_id', 'artist_name', 'songs')
+                         'fields': ('artist_id', 'artist_name', 'artist_thumbnail','songs')
                          }
                   ),
                  ('Autres informations', {
