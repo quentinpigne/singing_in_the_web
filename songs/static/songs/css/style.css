@@ -10,10 +10,19 @@ html, body {
     font-size: 14px;
 }
 
-@media (min-width:768px) {
-    h1 {
-        font-size: 68px;
-    }
+h1 {
+    position: absolute;
+    font-size: 36px;
+    margin: 60px 0;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+h2 {
+    position: absolute;
+    font-size: 18px;
+    margin: 110px 0 ;
+    font-weight: normal;
 }
 
 a {
@@ -166,7 +175,7 @@ footer {
     font-style: italic;
 } /* ie */
 
-.node {
+.ellipse {
     stroke-width: 0;
     fill-opacity: 0.6;
 }

@@ -69,20 +69,25 @@ function startGraph() {
 }
 
 function tick() {
-	var link = svg.selectAll(".link").data(links);
-	var node = svg.selectAll(".node").data(nodes);
-	var title = svg.selectAll(".title").data(nodes);
+	var link = svg.selectAll(".link");
+	var ellipse = svg.selectAll(".ellipse");
+	var title = svg.selectAll(".title");
+	var image = svg.selectAll(".image");
 	link.attr("x1", function(d) { return d.source.x; })
 	    .attr("y1", function(d) { return d.source.y; })
 	    .attr("x2", function(d) { return d.target.x; })
 	    .attr("y2", function(d) { return d.target.y; });
-	
-	node.attr("cx", function(d) { return d.x; })
+
+	ellipse.attr("cx", function(d) { return d.x; })
 	    .attr("cy", function(d) { return d.y; });
+
+	image.attr("x", function(d) { return d.x - 32;})
+		 .attr("y", function(d) { return d.y - 32});
     
 	title.attr("x", function(d) { return d.x; })
 		.attr("y", function(d) { return d.y; });
-	node.each(collide(0.5));
+
+	ellipse.each(collide(0.5));
 }
 
 // Gestion des collisions
@@ -118,13 +123,24 @@ function collide(alpha) {
 // Fin de gestion des collisions
 
 function updateNodes() {
-	svg.selectAll(".node").remove();
+	svg.selectAll(".ellipse").remove();
+	svg.selectAll(".image").remove();
 	svg.selectAll(".title").remove();
 	
-	// Customize nodes
-	var title = svg.selectAll(".title")
+	var node = svg.selectAll(".node")
 		.data(nodes)
 		.enter()
+		.append("g")
+		.attr("class", function(d) {
+			if (d.type == 0 || d.type == 1 || d.type == 2) {
+				return "ellipse";
+			} else {
+				return "image";
+			}
+		});
+
+	// Add ellipses
+	svg.selectAll(".ellipse")
 		.append("text")
 		.attr("class", "title")
 		.attr("text-anchor","middle")
@@ -133,10 +149,10 @@ function updateNodes() {
 			return d.name.trunc();
 		});
 	
-	var node = svg.selectAll(".node")
-		.data(nodes)
-		.enter().append("ellipse")
-		.attr("class", "node")
+	// Add texts
+	svg.selectAll(".ellipse")
+		.append("ellipse")
+		.attr("class", "ellipse")
 		.attr("rx", function(d) {
 				var textWidth = d.name.trunc().width();
 				return textWidth != 0 ? textWidth / 2 + 10 : 0;
@@ -144,20 +160,54 @@ function updateNodes() {
 		.attr("ry", 30)
 		.style("fill", function(d) { return color(d.type); })
 		.call(force.drag);
+
+	// Add images
+	var images = svg.selectAll(".image")
+		.append("image")
+		.attr("class", "image")
+	    .attr("xlink:href", function(d) { return d.src; })
+	    .attr("width", "64px")
+	    .attr("height", "64px")
+	    .call(force.drag);
 	
-	// Add listener to nodes
-	svg.selectAll(".node").on("click", function(d) {
+	// Add listener to ellipses
+	svg.selectAll(".ellipse").on("click", function(d) {
 		if (d3.event.defaultPrevented) return; // ignore drag
 		detailNode(d);
 	});
 
+	// Make the image grow a little and show some details on mouse over
+	var setEvents = images
+		.on( 'mouseenter', function() {
+			d3.select("h1").html(root.name);
+			d3.select("h2").html(root.info);
+			// select element in current context
+			d3.select( this )
+			.transition()
+			.attr("x", function(d) { return d.x-64;})
+			.attr("y", function(d) { return d.y-64;})
+			.attr("height", 128)
+			.attr("width", 128);
+		})
+		// set back
+		.on( 'mouseleave', function() {
+			d3.select("h1").html("");
+			d3.select("h2").html("");
+			d3.select( this )
+			.transition()
+			.attr("x", function(d) { return d.x-32;})
+			.attr("y", function(d) { return d.y-32;})
+			.attr("height", 64)
+			.attr("width", 64);
+		});
+
 	startGraph();
 }
 
-function showLinks() {
+function updateLinks() {
 	svg.selectAll(".link").remove();
 	var link = svg.selectAll(".line")
-		.data(nodes)
+		.data(links)
 		.enter()
 		.append("line")
 		.attr("class", "link");
@@ -166,9 +216,6 @@ function showLinks() {
 function detailNode(d) {
 	// Hide search bar
 	$("#search-bar").hide();
-
-	// Clear the links and nodes
-	clearNodes();
 
 	// Node d becomes root
 	root.id = d.id;
@@ -205,15 +252,13 @@ function detailNode(d) {
 			switch(root.type) {
 				case 0:
 					// Artist node
-					root.artist_familiarity = data.artist_familiarity;
-					root.artist_hotness = data.artist_hotness;
-					root.artist_latitude = data.artist_latitude;
-					root.artist_longitude = data.artist_longitude;
-					root.artist_location = data.artist_location;
+					root.artist_thumbnail = data.artist_thumbnail;
+					root.info = data.artist_location;
 					break;
 				case 1:
 					// Album node
-					root.album_year = data.album_year;
+					root.album_cover = data.album_cover;
+					root.info = data.album_year;
 					break;
 				case 2:
 					// Song node
@@ -235,24 +280,44 @@ function detailNode(d) {
 					root.time_signature_confidence = data.time_signature_confidence;
 					break;
 			}
-		});
 
-	// Relatives request
-	d3.json(relativesRequest)
-		.header("Content-Type", "application/x-www-form-urlencoded")
-		.get(function(error, data) {
-			// Add all relatives nodes
-			$.each(data.nodes, function (index, node) {
-				addNode(node);
-			});
-			// Show the links in the graph
-			showLinks();
-			// Update the graph
-			updateNodes();
-		});
+			// Relatives request
+			d3.json(relativesRequest)
+				.header("Content-Type", "application/x-www-form-urlencoded")
+				.get(function(error, data) {
+					clearNodes();
+					// Add all relatives nodes
+					$.each(data.nodes, function (index, node) {
+						addNode(node);
+					});
 
-	// Develop root node details
-	// TODO ...
+					// Develop root node details
+					switch (root.type) {
+						case 0:
+							detailArtistNode();
+							break;
+						case 1:
+							detailAlbumNode();
+							break;
+						case 2:
+							break;
+					}
+					updateLinks();
+					updateNodes();
+				});
+		});
+}
+
+function detailArtistNode() {
+	// Add an artist thumbnail link from the root node
+	var node = {src:root.artist_thumbnail, type:3};
+	addNode(node);
+}
+
+function detailAlbumNode() {
+	// Add an album cover link from the root node
+	var node = {src:root.album_cover, type:3};
+	addNode(node);
 }
 
 function clearNodes() {
@@ -296,5 +361,3 @@ d3.select(window).on("resize", resize);
 
 // Init graph
 initGraph();
-
-
