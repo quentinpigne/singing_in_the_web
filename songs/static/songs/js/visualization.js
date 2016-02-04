@@ -37,6 +37,16 @@ String.prototype.trunc = function() {
 	}
 }
 
+// Calculate player dimensions
+var pw, ph;
+var p = $('<audio controls></audio>').css({
+	'position' : 'absolute',
+	'visibility' : 'hidden'
+}).appendTo($('body'));
+pw = p.width();
+ph = p.height();
+p.remove();
+
 function initGraph() {
 	// Set svg dimensions
 	w = $("#graph").width();
@@ -50,7 +60,7 @@ function initGraph() {
 		.attr("preserveAspectRatio", "xMidYMid meet");
 	
 	// Initial nodes and links
-	root = {index:0, x:w/2, y:h/2, fixed:true, name:'', type:0};
+	root = {index:0, x:w/2, y:h/2, fixed:true, type:-1};
 	nodes = [root];
 	links = [];
 	
@@ -73,6 +83,7 @@ function tick() {
 	var ellipse = svg.selectAll(".ellipse");
 	var title = svg.selectAll(".title");
 	var image = svg.selectAll(".image");
+	var player = svg.selectAll(".player");
 	link.attr("x1", function(d) { return d.source.x; })
 	    .attr("y1", function(d) { return d.source.y; })
 	    .attr("x2", function(d) { return d.target.x; })
@@ -82,10 +93,13 @@ function tick() {
 	    .attr("cy", function(d) { return d.y; });
 
 	image.attr("x", function(d) { return d.x - 32;})
-		 .attr("y", function(d) { return d.y - 32});
+		.attr("y", function(d) { return d.y - 32});
     
 	title.attr("x", function(d) { return d.x; })
 		.attr("y", function(d) { return d.y; });
+
+	player.attr("x", function(d) { return d.x - pw/2;})
+		.attr("y", function(d) { return d.y - ph/2; })
 
 	ellipse.each(collide(0.5));
 }
@@ -126,6 +140,8 @@ function updateNodes() {
 	svg.selectAll(".ellipse").remove();
 	svg.selectAll(".image").remove();
 	svg.selectAll(".title").remove();
+	svg.selectAll(".player").remove();
+	svg.selectAll(".undefined").remove();
 	
 	var node = svg.selectAll(".node")
 		.data(nodes)
@@ -134,8 +150,12 @@ function updateNodes() {
 		.attr("class", function(d) {
 			if (d.type == 0 || d.type == 1 || d.type == 2) {
 				return "ellipse";
-			} else {
+			} else if (d.type == 3) {
 				return "image";
+			} else if (d.type == 4) {
+				return "player";
+			} else {
+				return "undefined";
 			}
 		});
 
@@ -154,8 +174,7 @@ function updateNodes() {
 		.append("ellipse")
 		.attr("class", "ellipse")
 		.attr("rx", function(d) {
-				var textWidth = d.name.trunc().width();
-				return textWidth != 0 ? textWidth / 2 + 10 : 0;
+				return d.name.trunc().width() / 2 + 10;
 			})
 		.attr("ry", 30)
 		.style("fill", function(d) { return color(d.type); })
@@ -180,7 +199,7 @@ function updateNodes() {
 	var setEvents = images
 		.on( 'mouseenter', function() {
 			d3.select("h1").html(root.name);
-			d3.select("h2").html(root.info);
+			d3.select("h2").html(root.info != 0 ? root.info : "");
 			// select element in current context
 			d3.select( this )
 			.transition()
@@ -200,6 +219,18 @@ function updateNodes() {
 			.attr("height", 64)
 			.attr("width", 64);
 		});
+
+	// Add players for songs
+	svg.selectAll(".player")
+		.append("foreignObject")
+		.attr("class", "player")
+		.attr("width", pw)
+		.attr("height", ph)
+		.append("xhtml:body")
+		.html(function(d) {
+			return "<audio controls><source src='" + d.src + "' type='audio/mp3'></audio>";
+		})
+		.call(force.drag);
 
 	startGraph();
 }
@@ -262,22 +293,7 @@ function detailNode(d) {
 					break;
 				case 2:
 					// Song node
-					root.song_hotness = data.song_hotness;
-					root.analysis_sample_rate = data.analysis_sample_rate;
-					root.audio_md5 = data.audio_md5;
-					root.danceability = data.danceability;
-					root.duration = data.duration;
-					root.end_of_fade_in = data.end_of_fade_in;
-					root.energy = data.energy;
-					root.key_item = data.key_item;
-					root.key_confidence = data.key_confidence;
-					root.loudness = data.loudness;
-					root.mode = data.mode;
-					root.mode_confidence = data.mode_confidence;
-					root.start_of_fade_out = data.start_of_fade_out;
-					root.tempo = data.tempo;
-					root.time_signature = data.time_signature;
-					root.time_signature_confidence = data.time_signature_confidence;
+					root.preview_url = data.preview_url;
 					break;
 			}
 
@@ -300,6 +316,7 @@ function detailNode(d) {
 							detailAlbumNode();
 							break;
 						case 2:
+							detailSongNode();
 							break;
 					}
 					updateLinks();
@@ -317,6 +334,12 @@ function detailArtistNode() {
 function detailAlbumNode() {
 	// Add an album cover link from the root node
 	var node = {src:root.album_cover, type:3};
+	addNode(node);
+}
+
+function detailSongNode() {
+	// Add a player link from the root node
+	var node = {src:root.preview_url, type:4};
 	addNode(node);
 }
 
