@@ -3,6 +3,9 @@ from django.shortcuts import render
 from django.http.response import JsonResponse
 from songs.models import Artist, Album, Song, Songstatistic
 
+import requests
+import bs4
+
 def index(request):
     return render(request, 'songs/index.html')
 
@@ -45,7 +48,13 @@ def artist_details(request):
     except ObjectDoesNotExist:
         return JsonResponse({'error': 'L\'artiste n\'existe pas'})
 
+    search = requests.get("http://www.google.fr/search?q=" + art.artist_name.replace(' ', '+') + "&tbm=isch")
+    soup = bs4.BeautifulSoup(search.text, 'html.parser')
+    img = soup.find('img')
+    url = img.attrs['src']
+
     j = {}
+    j['artist_thumbnail'] = url
     j['artist_familiarity'] = art.artist_familiarity
     j['artist_hotness'] = art.artist_hotness
     j['artist_latitude'] = art.artist_latitude
@@ -89,8 +98,15 @@ def album_details(request):
     except ObjectDoesNotExist:
         return JsonResponse({'error': 'L\'album n\'existe pas'})
     
+    artist = alb.songs.all()[0].artist_set.all()[0].artist_name
+    search = requests.get("http://www.google.fr/search?q=" + artist.replace(' ', '+') + "+" + alb.album_name.replace(' ', '+') + "&tbm=isch")
+    soup = bs4.BeautifulSoup(search.text, 'html.parser')
+    img = soup.find('img')
+    url = img.attrs['src']
+    
     j = {}
     j['album_year'] = alb.album_year
+    j['album_cover'] = url
     
     return JsonResponse(j)
 
