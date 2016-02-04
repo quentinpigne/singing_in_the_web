@@ -3,8 +3,40 @@ from django.shortcuts import render
 from django.http.response import JsonResponse
 from songs.models import Artist, Album, Song, Songstatistic
 
-import requests
 import bs4
+import hmac
+import json
+import requests
+
+from hashlib import sha1
+from urllib import quote
+from base64 import b64encode
+from urlparse import urlparse
+from random import getrandbits
+from time import time
+
+def _sign_request_sha1(url,method,data,secret=""):
+    pu = urlparse(urlparse(url).geturl())
+
+    normUrl = "%s://%s%s%s" % (
+        pu.scheme,
+        pu.hostname,
+        "" if not pu.port or {"http":80,"https":443}[pu.scheme] == pu.port else ":%d" % pu.port,
+        pu.path,
+    )
+
+    names = data.keys()
+    names.sort()
+
+    sig = "%s&%s&%s" % (
+        method.upper(),
+        quote(normUrl,''),
+        quote("&".join(["%s=%s" % (k,quote(data[k].encode('utf-8'),'')) for k in names]),''),
+    )
+
+    key = "%s&%s" % (quote("qg59y6bcqkjapktn".encode('utf-8'),''),secret)
+
+    return b64encode(hmac.new(key,sig,sha1).digest())
 
 def index(request):
     return render(request, 'songs/index.html')
@@ -68,8 +100,42 @@ def song_details(request):
         song = Song.objects.get(song_id=request.GET['song_id'])
     except ObjectDoesNotExist:
         return JsonResponse({'error': 'La chanson n\'existe pas'})
+
+    search_data = { \
+        "q": song.artist_set.all()[0].artist_name + " " + song.title,
+        "oauth_consumer_key": "7dxyqkeks6bm",
+        "country": "GB",
+    }
+     
+    search = requests.get("http://api.7digital.com/1.2/track/search", params=search_data, headers={'Accept': 'application/json'})
+    res = json.loads(search.content)
     
+    try:
+        track_id = res['searchResults']['searchResult'][0]['track']['id']
+    
+        prev_url="http://previews.7digital.com/clip/" + str(track_id)
+    
+        data = { \
+            "oauth_consumer_key" : "7dxyqkeks6bm",
+            "oauth_nonce" : b64encode("%0x" % getrandbits(256))[:32],
+            "oauth_timestamp" : str(int(time())),
+            "oauth_signature_method" : "HMAC-SHA1",
+            "oauth_version" : "1.0",
+            "country" : "GB",
+        }
+    
+        data["oauth_signature"] = _sign_request_sha1(prev_url,"GET",data)
+        
+        for i, param in enumerate(data):
+            if i == 0:
+                prev_url = prev_url + '?' + quote(param) + '=' + quote(data[param])
+            else:
+                prev_url = prev_url + '&' + quote(param) + '=' + quote(data[param])
+    except IndexError:
+        prev_url = '#'
+
     j = {}
+    j['preview_url'] = prev_url
     j['song_hotness'] = song.song_hotness
     
     stats = Songstatistic.objects.get(song=song)
