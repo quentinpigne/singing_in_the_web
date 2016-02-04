@@ -118,16 +118,26 @@ def artist_relatives(request):
     
     all_sim_art = art.similar_artists.all()
     all_songs = art.songs.all()
+    all_alb = []
     
+    for song in all_songs.all():
+        for album in song.album_set.all():
+            all_alb.append(album)
+        
+    list(set(all_alb))
+        
     sim_art = []
     songs = []
+    alb = []
 
     i = 0
-    while len(sim_art) + len(songs) < 8 and i < 8:
+    while len(sim_art) + len(songs) + len(alb) < 9 and i < 9:
         if i < len(all_sim_art):
             sim_art.append(all_sim_art[i])
-        if i < len(all_songs) and len(sim_art) + len(songs) < 8:
+        if i < len(all_songs) and len(sim_art) + len(songs) + len(alb) < 9:
             songs.append(all_songs[i])
+        if i < len(all_alb)and len(sim_art) + len(songs) + len(alb) < 9:
+            alb.append(all_alb[i])
         i = i+1
     
     j = {}
@@ -136,6 +146,8 @@ def artist_relatives(request):
         j['nodes'].append({'id': a.artist_id, 'name': a.artist_name, 'type': 0})
     for s in songs:
         j['nodes'].append({'id': s.song_id, 'name': s.title, 'type': 2})
+    for a in alb:
+        j['nodes'].append({'id': a.album_id, 'name': a.album_name, 'type': 1})
          
     return JsonResponse(j)
 
@@ -181,18 +193,30 @@ def album_relatives(request):
         return JsonResponse({'error': 'L\'album n\'existe pas'})
     
     all_songs = alb.songs.all()
+    all_art = []
+    
+    for song in all_songs.all():
+        for artist in song.artist_set.all():
+            all_art.append(artist)
+        
+    list(set(all_art))
     
     songs = []
+    art = []
 
     i = 0
-    while len(songs) < 8 and i < 8:
-        if i < len(all_songs) and len(songs) < 8:
+    while len(songs) + len(art) < 8 and i < 8:
+        if i < len(all_songs):
             songs.append(all_songs[i])
+        if i < len(all_art) and len(songs) + len(art) < 8:
+            art.append(all_art[i])
         i = i+1
     
     j = {}
     j['nodes'] = []
     for s in songs:
         j['nodes'].append({'id': s.song_id, 'name': s.title, 'type': 2})
+    for a in art:
+        j['nodes'].append({'id': a.artist_id, 'name': a.artist_name, 'type': 0})
          
     return JsonResponse(j)
