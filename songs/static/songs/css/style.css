@@ -61,6 +61,65 @@ section {
     min-height: 100%;
 }
 
+footer {
+	position: fixed;
+	bottom: 0px;
+}
+
+#legend {
+	font-family: 'Lato', sans-serif;
+	opacity: 0.6
+}
+
+#artists {
+	margin-left: 10px;
+}
+
+#artists-color {
+	height: 15px;
+	width: 15px;
+	background-color: #357AB7;
+	display: inline-block;
+}
+
+#artists-text {
+	display: inline-block;
+	margin-left: 10px;
+}
+
+#songs {
+	margin-left: 10px;
+}
+
+#songs-color {
+	height: 15px;
+	width: 15px;
+	background-color: #FCD21C;
+	display: inline-block;
+}
+
+#songs-text {
+	display: inline-block;
+	margin-left: 10px;
+}
+
+#albums {
+	margin-bottom: 10px;
+	margin-left: 10px;
+}
+
+#albums-color {
+	height: 15px;
+	width: 15px;
+	background-color: #C72C48;
+	display: inline-block;
+}
+
+#albums-text {
+	display: inline-block;
+	margin-left: 10px;
+}
+
 #graph {
     background-color: rgba(0, 0, 0, 0.7);
     height: 14rem;
