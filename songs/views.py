@@ -41,6 +41,9 @@ def _sign_request_sha1(url,method,data,secret=""):
 def index(request):
     return render(request, 'songs/index.html')
 
+def about(request):
+    return render(request, 'songs/about.html')
+
 def search(request):
     if request.GET['query'] == "":
         return JsonResponse({'nodes': []})

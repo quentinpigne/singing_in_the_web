@@ -1,0 +1,805 @@
+{% load staticfiles %}
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+<style type="text/css">
+@import
+    url('https://themes.googleusercontent.com/fonts/css?kit=PrdUOC1_uwv9PuICvdOGig')
+    ;
+
+.lst-kix_gujcnyvfm1sb-6>li:before {
+    content: "" counter(lst-ctn-kix_gujcnyvfm1sb-6, decimal) ". "
+}
+
+.lst-kix_gujcnyvfm1sb-7>li:before {
+    content: "" counter(lst-ctn-kix_gujcnyvfm1sb-7, lower-latin) ". "
+}
+
+ol.lst-kix_gujcnyvfm1sb-3.start {
+    counter-reset: lst-ctn-kix_gujcnyvfm1sb-3 0
+}
+
+.lst-kix_gujcnyvfm1sb-5>li {
+    counter-increment: lst-ctn-kix_gujcnyvfm1sb-5
+}
+
+.lst-kix_gujcnyvfm1sb-8>li {
+    counter-increment: lst-ctn-kix_gujcnyvfm1sb-8
+}
+
+.lst-kix_gujcnyvfm1sb-3>li:before {
+    content: "" counter(lst-ctn-kix_gujcnyvfm1sb-3, decimal) ". "
+}
+
+ol.lst-kix_gujcnyvfm1sb-5.start {
+    counter-reset: lst-ctn-kix_gujcnyvfm1sb-5 0
+}
+
+ol.lst-kix_gujcnyvfm1sb-8.start {
+    counter-reset: lst-ctn-kix_gujcnyvfm1sb-8 0
+}
+
+ol.lst-kix_gujcnyvfm1sb-0.start {
+    counter-reset: lst-ctn-kix_gujcnyvfm1sb-0 0
+}
+
+.lst-kix_gujcnyvfm1sb-4>li:before {
+    content: "" counter(lst-ctn-kix_gujcnyvfm1sb-4, lower-latin) ". "
+}
+
+.lst-kix_gujcnyvfm1sb-5>li:before {
+    content: "" counter(lst-ctn-kix_gujcnyvfm1sb-5, lower-roman) ". "
+}
+
+ol.lst-kix_gujcnyvfm1sb-7.start {
+    counter-reset: lst-ctn-kix_gujcnyvfm1sb-7 0
+}
+
+.lst-kix_gujcnyvfm1sb-8>li:before {
+    content: "" counter(lst-ctn-kix_gujcnyvfm1sb-8, lower-roman) ". "
+}
+
+ol.lst-kix_gujcnyvfm1sb-2.start {
+    counter-reset: lst-ctn-kix_gujcnyvfm1sb-2 0
+}
+
+.lst-kix_gujcnyvfm1sb-2>li {
+    counter-increment: lst-ctn-kix_gujcnyvfm1sb-2
+}
+
+ol.lst-kix_gujcnyvfm1sb-4 {
+    list-style-type: none
+}
+
+ol.lst-kix_gujcnyvfm1sb-4.start {
+    counter-reset: lst-ctn-kix_gujcnyvfm1sb-4 0
+}
+
+ol.lst-kix_gujcnyvfm1sb-5 {
+    list-style-type: none
+}
+
+ol.lst-kix_gujcnyvfm1sb-2 {
+    list-style-type: none
+}
+
+ol.lst-kix_gujcnyvfm1sb-3 {
+    list-style-type: none
+}
+
+ol.lst-kix_gujcnyvfm1sb-8 {
+    list-style-type: none
+}
+
+ol.lst-kix_gujcnyvfm1sb-6 {
+    list-style-type: none
+}
+
+.lst-kix_gujcnyvfm1sb-4>li {
+    counter-increment: lst-ctn-kix_gujcnyvfm1sb-4
+}
+
+ol.lst-kix_gujcnyvfm1sb-7 {
+    list-style-type: none
+}
+
+.lst-kix_gujcnyvfm1sb-1>li {
+    counter-increment: lst-ctn-kix_gujcnyvfm1sb-1
+}
+
+.lst-kix_gujcnyvfm1sb-6>li {
+    counter-increment: lst-ctn-kix_gujcnyvfm1sb-6
+}
+
+.lst-kix_gujcnyvfm1sb-3>li {
+    counter-increment: lst-ctn-kix_gujcnyvfm1sb-3
+}
+
+.lst-kix_gujcnyvfm1sb-0>li {
+    counter-increment: lst-ctn-kix_gujcnyvfm1sb-0
+}
+
+ol.lst-kix_gujcnyvfm1sb-1.start {
+    counter-reset: lst-ctn-kix_gujcnyvfm1sb-1 0
+}
+
+.lst-kix_gujcnyvfm1sb-7>li {
+    counter-increment: lst-ctn-kix_gujcnyvfm1sb-7
+}
+
+.lst-kix_gujcnyvfm1sb-2>li:before {
+    content: "" counter(lst-ctn-kix_gujcnyvfm1sb-2, lower-roman) ". "
+}
+
+ol.lst-kix_gujcnyvfm1sb-6.start {
+    counter-reset: lst-ctn-kix_gujcnyvfm1sb-6 0
+}
+
+ol.lst-kix_gujcnyvfm1sb-0 {
+    list-style-type: none
+}
+
+.lst-kix_gujcnyvfm1sb-0>li:before {
+    content: "" counter(lst-ctn-kix_gujcnyvfm1sb-0, decimal) ". "
+}
+
+.lst-kix_gujcnyvfm1sb-1>li:before {
+    content: "" counter(lst-ctn-kix_gujcnyvfm1sb-1, lower-latin) ". "
+}
+
+ol.lst-kix_gujcnyvfm1sb-1 {
+    list-style-type: none
+}
+
+ol {
+    margin: 0;
+    padding: 0
+}
+
+table td, table th {
+    padding: 0
+}
+
+.c14 {
+    page-break-after: avoid;
+    orphans: 2;
+    widows: 2;
+    text-align: center
+}
+
+.c10 {
+    margin-left: 36pt;
+    padding-left: 0pt;
+    page-break-after: avoid
+}
+
+.c7 {
+    margin-left: 72pt;
+    padding-left: 0pt;
+    page-break-after: avoid
+}
+
+.c9 {
+    background-color: #ffffff;
+    max-width: 451.4pt;
+    padding: 72pt 72pt 72pt 72pt
+}
+
+.c15 {
+    font-size: 30pt;
+    font-family: "Lato";
+    font-weight: bold
+}
+
+.c0 {
+    orphans: 2;
+    widows: 2;
+    text-align: justify
+}
+
+.c11 {
+    color: #1155cc;
+    text-decoration: underline
+}
+
+.c3 {
+    font-family: "Courier New";
+    font-style: italic
+}
+
+.c1 {
+    padding: 0;
+    margin: 0
+}
+
+.c12 {
+    color: inherit;
+    text-decoration: inherit
+}
+
+.c4 {
+    line-height: 1.0
+}
+
+.c13 {
+    font-size: 24pt
+}
+
+.c6 {
+    color: #3d85c6
+}
+
+.c5 {
+    font-family: "Courier New"
+}
+
+.c8 {
+    font-style: italic
+}
+
+.c16 {
+    font-weight: bold
+}
+
+.c2 {
+    height: 11pt
+}
+
+.title {
+    padding-top: 0pt;
+    color: #000000;
+    font-size: 26pt;
+    padding-bottom: 3pt;
+    font-family: "Arial";
+    line-height: 1.15;
+    page-break-after: avoid;
+    orphans: 2;
+    widows: 2;
+    text-align: left
+}
+
+.subtitle {
+    padding-top: 0pt;
+    color: #666666;
+    font-size: 15pt;
+    padding-bottom: 16pt;
+    font-family: "Arial";
+    line-height: 1.15;
+    page-break-after: avoid;
+    orphans: 2;
+    widows: 2;
+    text-align: left
+}
+
+li {
+    color: #000000;
+    font-size: 11pt;
+    font-family: "Arial"
+}
+
+p {
+    margin: 0;
+    color: #000000;
+    font-size: 11pt;
+    font-family: "Arial"
+}
+
+h1 {
+    padding-top: 20pt;
+    color: #000000;
+    font-size: 20pt;
+    padding-bottom: 6pt;
+    font-family: "Arial";
+    line-height: 1.15;
+    page-break-after: avoid;
+    orphans: 2;
+    widows: 2;
+    text-align: left
+}
+
+h2 {
+    padding-top: 18pt;
+    color: #000000;
+    font-size: 16pt;
+    padding-bottom: 6pt;
+    font-family: "Arial";
+    line-height: 1.15;
+    page-break-after: avoid;
+    orphans: 2;
+    widows: 2;
+    text-align: left
+}
+
+h3 {
+    padding-top: 16pt;
+    color: #434343;
+    font-size: 14pt;
+    padding-bottom: 4pt;
+    font-family: "Arial";
+    line-height: 1.15;
+    page-break-after: avoid;
+    orphans: 2;
+    widows: 2;
+    text-align: left
+}
+
+h4 {
+    padding-top: 14pt;
+    color: #666666;
+    font-size: 12pt;
+    padding-bottom: 4pt;
+    font-family: "Arial";
+    line-height: 1.15;
+    page-break-after: avoid;
+    orphans: 2;
+    widows: 2;
+    text-align: left
+}
+
+h5 {
+    padding-top: 12pt;
+    color: #666666;
+    font-size: 11pt;
+    padding-bottom: 4pt;
+    font-family: "Arial";
+    line-height: 1.15;
+    page-break-after: avoid;
+    orphans: 2;
+    widows: 2;
+    text-align: left
+}
+
+h6 {
+    padding-top: 12pt;
+    color: #666666;
+    font-size: 11pt;
+    padding-bottom: 4pt;
+    font-family: "Arial";
+    line-height: 1.15;
+    page-break-after: avoid;
+    font-style: italic;
+    orphans: 2;
+    widows: 2;
+    text-align: left
+}
+</style>
+</head>
+<body class="c9">
+    <p class="c14 title">
+        <a id="h.ouslozsc8i4l" name="h.ouslozsc8i4l"></a><span
+            class="c15">Singing in the Web</span>
+    </p>
+    <p class="c14 title">
+        <a id="h.fbxwhpvnatvf" name="h.fbxwhpvnatvf"></a><span
+            class="c13">Rapport</span>
+    </p>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-0 start" start="1">
+        <li class="c10 c0"><h1 style="display: inline">
+                <a id="h.7r801cau5p5p" name="h.7r801cau5p5p"></a><span>Concept</span>
+            </h1></li>
+    </ol>
+    <p class="c0 c4">
+        <span>Le concept de ce projet est tout d&rsquo;abord de
+            permettre &agrave; un utilisateur de rechercher parmi un
+            grand nombre de donn&eacute;es musicales, un artiste, une
+            chanson ou un album. La recherche n&rsquo;est pas sensible
+            &agrave; la casse. Suite &agrave; cette recherche, plusieurs
+            r&eacute;sultats peuvent correspondre. Les diff&eacute;rents
+            r&eacute;sultats trouv&eacute;s sont alors affich&eacute;s
+            sous forme de graphe. Le nombre de r&eacute;sultats est
+            limit&eacute; &agrave; 9 pour conserver une certaine
+            lisibilit&eacute;. La diff&eacute;rence entre artiste,
+            chanson et album est faite gr&acirc;ce &agrave; la couleur
+            des noeuds. Une l&eacute;gende permet par ailleurs de donner
+            la correspondance &agrave; l&rsquo;utilisateur. Si aucun
+            r&eacute;sultat ne correspond, aucun noeud ne
+            s&rsquo;affiche.</span>
+    </p>
+    <p class="c0 c4 c2">
+        <span></span>
+    </p>
+    <p class="c0 c4">
+        <span>Un fois les r&eacute;sultats de la recherche
+            affich&eacute;s, l&rsquo;utilisateur a la possibilit&eacute;
+            de cliquer sur n&rsquo;importe quel noeud pour le
+            s&eacute;lectionner. Le noeud s&eacute;lectionn&eacute; est
+            alors d&eacute;plac&eacute; au centre de
+            l&rsquo;&eacute;cran comme &ldquo;origine&rdquo; d&rsquo;un
+            nouveau graphe. Ce nouveau graphe contiendra un maximum de
+            10 noeuds &ldquo;p&eacute;riph&eacute;riques&rdquo;.</span>
+    </p>
+    <p class="c0 c4 c2">
+        <span></span>
+    </p>
+    <p class="c0 c4">
+        <span>Si le noeud s&eacute;lectionn&eacute; est un
+            artiste, les noeuds
+            &ldquo;p&eacute;riph&eacute;riques&rdquo; seront
+            compos&eacute;s de ses albums, ses chansons et les artistes
+            similaires. De plus le portrait de l&rsquo;artiste
+            s&rsquo;affichera parmi les noeuds. En survolant ce
+            portrait, celui-ci s&rsquo;agrandit et des informations
+            suppl&eacute;mentaires sur l&rsquo;artiste s&rsquo;affichent
+            en haut &agrave; gauche de l&rsquo;&eacute;cran (ici sa
+            localisation).</span>
+    </p>
+    <p class="c0 c4 c2">
+        <span></span>
+    </p>
+    <p class="c0 c4">
+        <span>Si le noeud s&eacute;lectionn&eacute; est une
+            chanson, les noeuds
+            &ldquo;p&eacute;riph&eacute;riques&rdquo; seront
+            compos&eacute;s de son/ses artistes, l&rsquo;album
+            associ&eacute; et les chansons similaires. De plus un
+            extrait musical de 30 secondes sera disponible parmi les
+            noeuds que l&rsquo;utilisateur pourra jouer &agrave; sa
+            convenance. </span>
+    </p>
+    <p class="c0 c2 c4">
+        <span></span>
+    </p>
+    <p class="c0 c4">
+        <span>Si le noeud s&eacute;lectionn&eacute; est un album,
+            les noeuds p&eacute;riph&eacute;riques seront
+            compos&eacute;s du/des artistes associ&eacute;s et de ses
+            chansons. De plus, la jaquette de l&rsquo;album
+            s&rsquo;affichera parmi les noeuds. En survolant la
+            jaquette, elle s&rsquo;agrandit et des informations
+            suppl&eacute;mentaires sur l&rsquo;album s&rsquo;affichent
+            en haut &agrave; gauche de l&rsquo;&eacute;cran (ici
+            l&rsquo;ann&eacute;e de sortie).</span>
+    </p>
+    <p class="c0 c4 c2">
+        <span></span>
+    </p>
+    <p class="c0 c4">
+        <span>L&rsquo;utilisateur peut donc naviguer parmi les
+            noeuds &agrave; sa guise afin de trouver des chansons
+            adapt&eacute;es &agrave; ses go&ucirc;ts. Si jamais
+            l&rsquo;utilisateur souhaite revenir &agrave; la barre de
+            recherche, il lui suffit de cliquer sur l&rsquo;ic&ocirc;ne
+            &ldquo;singing in the web&rdquo; en haut &agrave; gauche de
+            l&rsquo;&eacute;cran.</span>
+    </p>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-0" start="2">
+        <li class="c0 c10"><h1 style="display: inline">
+                <a id="h.pe0k15ldrq5u" name="h.pe0k15ldrq5u"></a><span>Donn&eacute;es</span>
+            </h1></li>
+    </ol>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-1 start" start="1">
+        <li class="c7 c0"><h2 style="display: inline">
+                <a id="h.6cqom7n16knp" name="h.6cqom7n16knp"></a><span>MilionSongs
+                    dataset</span>
+            </h2></li>
+    </ol>
+    <p class="c0">
+        <span>Ce projet utilise plusieurs datasets open source.
+            Le dataset principal du projet est un extrait du
+            MillionSongs dataset (</span><span class="c11"><a
+            class="c12"
+            href="https://www.google.com/url?q=http://labrosa.ee.columbia.edu/millionsong/&amp;sa=D&amp;ust=1454664371205000&amp;usg=AFQjCNH6VjrBqls4Z1co9YlkQiBPHrWNWQ">http://labrosa.ee.columbia.edu/millionsong/</a></span><span>)
+            contenant les metadata et un certain nombre de features de
+            10000 chansons. Nous avons choisi un extrait du dataset
+            original car le dataset complet repr&eacute;sente
+            pr&egrave;s de 300 Go de donn&eacute;es, ce qui
+            n&rsquo;aurait pas &eacute;t&eacute; pratique dans notre
+            projet (n&eacute;cessit&eacute; de d&eacute;ployer une
+            infrastructure sp&eacute;cialis&eacute;e dans le traitement
+            de gros volumes de donn&eacute;es comme Hadoop). Cependant,
+            cet &eacute;chantillon est suffisant pour notre projet qui
+            est par ailleurs con&ccedil;u pour &eacute;voluer et prendre
+            en compte le dataset complet. Un second dataset que nous
+            avons ajout&eacute; &agrave; notre projet est un dataset de
+        </span><span class="c8">&ldquo;The Echo Nest&rdquo;</span><span>&nbsp;contenant
+            des triplets relatifs aux musiques &eacute;cout&eacute;es
+            par un million d&rsquo;utilisateurs (</span><span class="c11"><a
+            class="c12"
+            href="https://www.google.com/url?q=http://labrosa.ee.columbia.edu/millionsong/tasteprofile&amp;sa=D&amp;ust=1454664371205000&amp;usg=AFQjCNGogzSnb4IguCLAAEODv-qM9phIwg">http://labrosa.ee.columbia.edu/millionsong/tasteprofile</a></span><span>).
+            Le dernier dataset ajout&eacute; est celui de last.fm
+            contenant des tags et des similarit&eacute;s entre les
+            chansons du MillionSongs dataset (</span><span class="c11"><a
+            class="c12"
+            href="https://www.google.com/url?q=http://labrosa.ee.columbia.edu/millionsong/lastfm&amp;sa=D&amp;ust=1454664371206000&amp;usg=AFQjCNHLF8u0sWzizToWeFlMD2u7Ajrwww">http://labrosa.ee.columbia.edu/millionsong/lastfm</a></span><span>).</span>
+    </p>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-1" start="2">
+        <li class="c7 c0"><h2 style="display: inline">
+                <a id="h.pvb2tadkoen8" name="h.pvb2tadkoen8"></a><span>Google
+                    image</span>
+            </h2></li>
+    </ol>
+    <p class="c0">
+        <span>Pour chaque noeud de type artiste, nous effectuons
+            une requ&ecirc;te HTTP gr&acirc;ce &agrave; la
+            biblioth&egrave;que python </span><span class="c3">requests</span><span>.
+            Cette requ&ecirc;te correspond &agrave; une recherche du nom
+            de l&rsquo;artiste dans Google image. Elle nous permet de
+            r&eacute;cup&eacute;rer le DOM du r&eacute;sultat de la
+            recherche, duquel nous extrayons l&rsquo;URL de la
+            premi&egrave;re image trouv&eacute;e, en supposant
+            qu&rsquo;il s&rsquo;agisse de la plus pertinente,
+            c&rsquo;est &agrave; dire d&rsquo;un portrait r&eacute;cent
+            de l&rsquo;artiste. </span>
+    </p>
+    <p class="c0 c2">
+        <span></span>
+    </p>
+    <p class="c0">
+        <span>Nous effectuons la m&ecirc;me manipulation pour les
+            jaquettes d&rsquo;album, en extrayant la premi&egrave;re
+            image du r&eacute;sultat de la recherche Google image du
+            titre de l&rsquo;album suivi du nom de l&rsquo;artiste. Ces
+            images seront ensuite affich&eacute;es par
+            l&rsquo;application afin de donner des rep&egrave;res
+            visuels &agrave; l&rsquo;utilisateur.</span>
+    </p>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-1" start="3">
+        <li class="c7 c0"><h2 style="display: inline">
+                <a id="h.20l55ctbaggl" name="h.20l55ctbaggl"></a><span>7digital</span>
+            </h2></li>
+    </ol>
+    <p class="c0">
+        <span>Afin de rendre plus optimale
+            l&rsquo;exp&eacute;rience de nos utilisateurs, nous avons
+            souhait&eacute; leur donner la possibilit&eacute;
+            d&rsquo;&eacute;couter des extraits de chansons au fur et
+            &agrave; mesure de leur navigation. Nous nous sommes servi
+            pour cela du site &ldquo;7digital&rdquo;. Il s&rsquo;agit en
+            effet d&rsquo;un service de vente de musique en ligne qui
+            permet l&rsquo;&eacute;coute d&rsquo;extraits de 30
+            secondes. Il pr&eacute;sente de plus le grand avantage de
+            fournir aux d&eacute;veloppeurs une API permettant de
+            rechercher des artistes, des musiques et
+            d&rsquo;&eacute;couter les extraits via une application
+            externe. Il nous a fallu pour cela nous inscrire sur le site
+            et faire une demande afin d&rsquo;obtenir des cl&eacute;s
+            d&rsquo;authentification </span><span class="c3">OAuth</span><span>,</span><span>&nbsp;n&eacute;cessaires
+            pour se connecter &agrave; l&rsquo;API.</span>
+    </p>
+    <p class="c0 c2">
+        <span></span>
+    </p>
+    <p class="c0">
+        <span>Les datasets utilis&eacute;s contenaient
+            initialement pour chaque chanson l&rsquo;identifiant
+            7digital nous permettant d&#39;acc&eacute;der &agrave;
+            l&rsquo;extrait correspondant. Cependant nous nous sommes
+            rapidement rendu compte que ceux-ci, pour la plupart, ne
+            correspondait plus, ceci probablement d&ucirc; &agrave;
+            l&rsquo;anciennet&eacute; des datasets. C&rsquo;est pourquoi
+            nous avons finalement utilis&eacute; la partie de
+            l&rsquo;API permettant une recherche de chanson pour
+            retrouver le vrai identifiant qui nous servira ensuite
+            &agrave; retrouver l&rsquo;extrait. Attaquer l&rsquo;API de
+            pr&eacute;visualisation de musique a pos&eacute; son lot de
+            complication</span><span>s</span><span>&nbsp;car la
+            requ&ecirc;te n&eacute;cessitait une signature </span><span
+            class="c5">OAuth</span><span>. Apr&egrave;s quelques
+            recherches, nous avons r&eacute;ussi &agrave; trouver
+            l&rsquo;algorithme (&agrave; base de hachage HMAC-SHA1)
+            permettant de g&eacute;n&eacute;rer cette signature</span><span>.</span>
+    </p>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-0" start="3">
+        <li class="c10 c0"><h1 style="display: inline">
+                <a id="h.vjxqfueu6zxb" name="h.vjxqfueu6zxb"></a><span>Traitement</span>
+            </h1></li>
+    </ol>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-1 start" start="1">
+        <li class="c7 c0"><h2 style="display: inline">
+                <a id="h.t1o8htj3kd3b" name="h.t1o8htj3kd3b"></a><span>MillionSongs
+                    dataset</span>
+            </h2></li>
+    </ol>
+    <p class="c0 c2">
+        <span></span>
+    </p>
+    <p class="c0">
+        <span>Le principal traitement effectu&eacute; sur ce
+            dataset a &eacute;t&eacute; de convertir un grand nombre de
+            fichiers .hdf5 en une base de donn&eacute;es SQL. Cela
+            permet un acc&egrave;s plus rapide aux donn&eacute;es, tout
+            en ne s&eacute;lectionnant que les donn&eacute;es
+            n&eacute;cessaires afin de r&eacute;duire la quantit&eacute;
+            de donn&eacute;es. Le m&ecirc;me type de traitement a
+            &eacute;t&eacute; effectu&eacute; sur le dataset de last.fm,
+            &agrave; l&rsquo;exception du fait que les donn&eacute;es
+            &eacute;taient initialement au format JSON et non HDF5.
+            Enfin, le dataset de </span><span class="c8">&ldquo;The Echo
+            Nest&rdquo;</span><span>&nbsp;a &eacute;t&eacute;
+            filtr&eacute; afin de ne conserver que les utilisateurs qui
+            ont &eacute;cout&eacute; les musiques pr&eacute;sentes dans
+            le dataset que nous avions. Tous ces traitements ont permis
+            de r&eacute;duire la taille des donn&eacute;es de 5,5 Go
+            &agrave; 77 Mo.</span>
+    </p>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-1" start="2">
+        <li class="c7 c0"><h2 style="display: inline">
+                <a id="h.mae1lvcgoag1" name="h.mae1lvcgoag1"></a><span>Google
+                    image</span>
+            </h2></li>
+    </ol>
+    <p class="c0">
+        <span>Pour les photos des artistes et les pochettes des
+            albums, nous nous sommes servi des miniatures
+            affich&eacute;es dans la page des r&eacute;sultats de
+            recherche. Ainsi elles nous arrivaient avec une taille qui
+            nous correspondait et nous n&rsquo;avons pas fait de
+            traitement particulier dessus.</span>
+    </p>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-1" start="3">
+        <li class="c7 c0"><h2 style="display: inline">
+                <a id="h.sl5jf7clc1vv" name="h.sl5jf7clc1vv"></a><span>7digital</span>
+            </h2></li>
+    </ol>
+    <p class="c0">
+        <span>Les extraits sont r&eacute;cup&eacute;r&eacute;s
+            dans un format binaire, directement exploitable par la
+            balise </span><span class="c5">&lt;audio&gt;</span><span>&nbsp;d&rsquo;&rsquo;HTML5,
+            nous n&rsquo;avons donc pas eu &agrave; faire de traitement
+            sur ceux-ci.</span>
+    </p>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-0" start="4">
+        <li class="c10 c0"><h1 style="display: inline">
+                <a id="h.pv9atygjwmx6" name="h.pv9atygjwmx6"></a><span>Architecture</span>
+            </h1></li>
+    </ol>
+    <p class="c0">
+        <span>Le sch&eacute;ma de la base de donn&eacute;es MySQL
+            est le suivant :</span>
+    </p>
+    <p class="c0 c2">
+        <span class="c16"></span>
+    </p>
+    <p class="c0">
+        <span
+            style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 601.70px; height: 324.00px;"><img
+            alt="" src="{% static 'songs/img/image00.png' %}"
+            style="width: 601.70px; height: 324.00px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+            title=""></span>
+    </p>
+    <p class="c0 c2">
+        <span></span>
+    </p>
+    <p class="c0">
+        <span>On pourrait r&eacute;sumer cette base de
+            donn&eacute;es en quelques chiffres significatifs : 3888
+            artistes qui ont &eacute;crit 10000 chansons
+            regroup&eacute;es en 8419 albums.</span>
+    </p>
+    <p class="c0 c2">
+        <span></span>
+    </p>
+    <p class="c0">
+        <span>L&rsquo;architecture de l&rsquo;application est
+            constitu&eacute;e de trois tiers : Un client et son
+            navigateur, un serveur d&rsquo;application (Django) ainsi
+            qu&rsquo;un serveur de bases de donn&eacute;es (MySQL). La
+            premi&egrave;re requ&ecirc;te permettant
+            d&rsquo;acc&eacute;der au site est faite de mani&egrave;re
+            synchrone afin que Django envoie la page Web. Toutes les
+            autres requ&ecirc;tes faites durant la navigation sont
+            asynchrones (en AJAX) ce qui permet une tr&egrave;s bonne
+            fluidit&eacute;.</span>
+    </p>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-0" start="5">
+        <li class="c10 c0"><h1 style="display: inline">
+                <a id="h.qddet3sogzby" name="h.qddet3sogzby"></a><span>Technologies</span>
+            </h1></li>
+    </ol>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-1 start" start="1">
+        <li class="c7 c0"><h2 style="display: inline">
+                <a id="h.596cqocwt2ng" name="h.596cqocwt2ng"></a><span>MySQL</span>
+            </h2></li>
+    </ol>
+    <p class="c0">
+        <span>Nous avons d&eacute;cid&eacute; d&rsquo;utiliser
+            MySQL pour la base de donn&eacute;es. En effet, ce SGBD nous
+            permet un acc&egrave;s simple et rapide aux donn&eacute;es.
+            De plus, cette base de donn&eacute;es est
+            g&eacute;r&eacute;e directement par l&rsquo;ORM du framework
+            Django que nous avons utilis&eacute;. Enfin,
+            l&rsquo;utilisation d&rsquo;une base NoSQL n&rsquo;aurait
+            pas &eacute;t&eacute; adapt&eacute;e dans notre cas du fait
+            de la faible quantit&eacute; de donn&eacute;es dont nous
+            disposons et de l&rsquo;absence de structure dans ces
+            derni&egrave;res.</span>
+    </p>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-1" start="2">
+        <li class="c7 c0"><h2 style="display: inline">
+                <a id="h.9kqow5mlb6if" name="h.9kqow5mlb6if"></a><span>Django</span>
+            </h2></li>
+    </ol>
+    <p class="c0">
+        <span>Il s&rsquo;agit d&rsquo;un framework Python
+            permettant de d&eacute;velopper tr&egrave;s rapidement des
+            applications Web, ce qui est tr&egrave;s pratique lorsque
+            l&rsquo;on a que tr&egrave;s peu de temps pour
+            r&eacute;aliser un projet d&rsquo;une envergure assez
+            importante. Il dispose ainsi d&rsquo;un ORM qui permet un
+            acc&egrave;s simplifi&eacute; aux donn&eacute;es de
+            l&rsquo;application en ne manipulant que les objets Python
+            sans se soucier de l&rsquo;organisation des donn&eacute;es
+            en base et des requ&ecirc;tes permettant d&rsquo;y
+            acc&eacute;der. Cela permet de plus de pouvoir changer de
+            SGBD au besoin tr&egrave;s rapidement et tr&egrave;s
+            simplement. &Agrave; l&rsquo;heure actuelle, de par
+            l&rsquo;envergure des projets que l&rsquo;on rencontre en
+            informatique et, de ce fait, le travail
+            d&rsquo;&eacute;quipe qui devient de plus en plus important
+            et surtout de plus en plus agile, il est presque
+            indispensable d&rsquo;utiliser un framework car cela met en
+            place un cadre de travail et des m&eacute;thodes de
+            d&eacute;veloppement fixes</span><span>&nbsp;et </span><span>connues
+            de toute l&rsquo;&eacute;quipe ce qui permet un travail bien
+            plus stable et r&eacute;gulier.</span>
+    </p>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-1" start="3">
+        <li class="c0 c7"><h2 style="display: inline">
+                <a id="h.fbgga2ve46v2" name="h.fbgga2ve46v2"></a><span>D3</span>
+            </h2></li>
+    </ol>
+    <p class="c0">
+        <span>D3 est une biblioth&egrave;que JavaScript utilisant
+            les technologies HTML, CSS et SVG et permettant de
+            visualiser des donn&eacute;es dynamiquement. Elle a le gros
+            avantage de proposer un tr&egrave;s grand nombre de type de
+            visualisations, aussi diverses que vari&eacute;es.
+            C&rsquo;est gr&acirc;ce &agrave; cette biblioth&egrave;que
+            que nous affichons les artistes, chansons, et albums sous
+            forme de </span><span class="c16">force-directed graph</span><span>.
+            Nous avons choisi d&rsquo;exploiter ce dernier type de
+            visualisation pour notre application. Nous profitons des
+            interactions suivantes : drag and drop, click, mouse over et
+            mouse out. Le SVG permet d&rsquo;inclure dans la page des
+            objets de tous types, y compris des objets non-SVG
+            (foreignObject). Ainsi, les noeuds de notre graphe sont des
+            ellipses, du texte, des images ou encore des balises audio
+            HTML5.</span>
+    </p>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-1" start="4">
+        <li class="c7 c0"><h2 style="display: inline">
+                <a id="h.ew2cvknwpat7" name="h.ew2cvknwpat7"></a><span>Bootstrap</span>
+            </h2></li>
+    </ol>
+    <p class="c0">
+        <span>Bootstrap est un framework CSS permettant de placer
+            facilement les objets &agrave; afficher sur une page Web. Il
+            permet d&rsquo;assurer &eacute;galement que le design de la
+            page est responsive.</span>
+    </p>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-1" start="5">
+        <li class="c7 c0"><h2 style="display: inline">
+                <a id="h.q0zxwhvcfiyl" name="h.q0zxwhvcfiyl"></a><span>AJAX</span>
+            </h2></li>
+    </ol>
+    <p class="c0">
+        <span>Des requ&ecirc;tes AJAX permettent de
+            r&eacute;cup&eacute;rer les donn&eacute;es du graphe qui
+            sont renvoy&eacute;es par le serveur au format JSON. Elles
+            sont ensuite trait&eacute;es par un code JS pour &ecirc;tre
+            ins&eacute;r&eacute;es dans le graphe SVG. Diff&eacute;rents
+            types de requ&ecirc;tes ont &eacute;t&eacute; mises en place
+            : recherche de noeuds, similarit&eacute;s entre noeuds et
+            d&eacute;tails des noeuds.</span>
+    </p>
+    <ol class="c1 lst-kix_gujcnyvfm1sb-1" start="6">
+        <li class="c7 c0"><h2 style="display: inline">
+                <a id="h.qmqiby9qfcg2" name="h.qmqiby9qfcg2"></a><span>OpenShift</span>
+            </h2></li>
+    </ol>
+    <p class="c0">
+        <span>OpenShift est un service en ligne de PAAS fourni
+            par la soci&eacute;t&eacute; RedHat. Il nous a permis de
+            mettre en ligne notre application et surtout de mettre en
+            place un syst&egrave;me de d&eacute;ploiement continu. En
+            effet, une application OpenShift est stock&eacute;e dans un
+            d&eacute;pot git, clonable sur la machine du
+            d&eacute;veloppeur et un d&eacute;ploiement est
+            effectu&eacute; &agrave; chaque </span><span class="c5">push</span><span>.
+            Il est aussi possible de mettre en place un syst&egrave;me
+            d&rsquo;int&eacute;gration continue via Jenkins mais nous
+            n&rsquo;avons malheureusement pas eu le temps de
+            d&eacute;velopper un jeu de tests.</span>
+    </p>
+</body>
+</html>
